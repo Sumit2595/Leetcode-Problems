@@ -11,19 +11,28 @@
  */
 class Solution {
 public:
-    priority_queue<pair<double,int>,vector<pair<double,int>>,greater<pair<double,int>>>pq;
-    void solve(TreeNode* root, double target){
-        if(!root)
+    int ans;
+    void solve(TreeNode* root, double target,double currDiff){
+        if(!root){
             return;
-        double diff=abs(root->val - target);
-        pq.push({diff,root->val});
-        solve(root->left,target);
-        solve(root->right,target);
+        }
+        double diff=root->val-target;
+        if(diff < 0){
+            if(abs(diff) < currDiff){
+                currDiff=abs(diff);
+                ans=root->val;
+            }
+            solve(root->right,target,currDiff);
+        } else {
+            if(abs(diff) < currDiff){
+                currDiff=abs(diff);
+                ans=root->val;
+            }
+            solve(root->left,target,currDiff);
+        }
     }
     int closestValue(TreeNode* root, double target) {
-        if(!root)
-            return 0;
-        solve(root,target);
-        return pq.top().second;
+        solve(root,target,LONG_MAX);
+        return ans;
     }
 };
