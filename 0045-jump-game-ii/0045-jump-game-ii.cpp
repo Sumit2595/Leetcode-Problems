@@ -1,20 +1,18 @@
 class Solution {
 public:
-    int dp[10001];
-    int solve(vector<int>& nums,int curr,int dest){
-        if(curr>=dest)
-            return 0;
-        if(dp[curr]!=-1)
-            return dp[curr];
-        int steps=INT_MAX-1;
-        for(int i=1;i<=nums[curr];i++){
-            steps=min(steps,1+solve(nums,curr+i,dest));
-        }
-        return dp[curr]=steps;
-    }
     int jump(vector<int>& nums) {
-        int n=nums.size();
-        memset(dp,-1,sizeof(dp));
-        return solve(nums,0,n-1);
+       int n=nums.size(),currJump=nums[0],maxJump=nums[0];
+        if(n==1)
+            return 0;
+        int i=0,jumps=1;
+        while(i<n-1){
+            maxJump=max(maxJump,i+nums[i]);
+            if(currJump == i){
+                jumps++;
+                currJump=maxJump;
+            }
+            i++;
+        }
+        return jumps;
     }
 };
