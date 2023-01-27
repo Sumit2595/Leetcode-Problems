@@ -11,12 +11,10 @@ public:
         dq.push_back(val);
         sum+=val;
         if(dq.size()<=sz){
-            cout<<sum<<" ";
         } else{
             int first=dq.front();
             dq.pop_front();
             sum-=first;
-            cout<<sum<<" ";
         }
         return sum/(double)dq.size();
     }
