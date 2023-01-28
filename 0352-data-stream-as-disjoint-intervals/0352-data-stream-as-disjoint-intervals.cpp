@@ -1,26 +1,16 @@
 class SummaryRanges {
 public:
-    vector<int>stream;
+    set<int>st;
     SummaryRanges() {
         
     }
     
     void addNum(int value) {
-        if(stream.empty()){
-            stream.push_back(value);
-        } else {
-            int index=lower_bound(stream.begin(),stream.end(),value) - stream.begin();
-            int size=stream.size();
-            //entered element is greater
-            if(size == index){
-                stream.push_back(value);
-            } else if(stream[index]!=value){ 
-                stream.insert(stream.begin() + index, value);
-            }
-        }
+        st.insert(value);
     }
     
     vector<vector<int>> getIntervals() {
+        vector<int>stream(st.begin(),st.end());
         vector<vector<int>>ans;
         int start=stream.front();
         int sz=stream.size();
