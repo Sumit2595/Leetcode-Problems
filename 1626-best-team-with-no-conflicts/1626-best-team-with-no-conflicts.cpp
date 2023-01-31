@@ -1,31 +1,40 @@
 class Solution
 {
     public:
-        #define pp pair<int, int>
-        int bestTeamScore(vector<int> &scores, vector<int> &ages)
+        int findMaxScore(vector<vector < int>> &dp, vector< pair<int, int>> &ageScorePair, int prev, int index)
         {
-            int n = scores.size();
-            vector<pp> vec;
-            for (int i = 0; i < n; i++)
+
+            if (index >= ageScorePair.size())
             {
-                vec.push_back({ scores[i],
-                    ages[i] });
+                return 0;
             }
-            sort(vec.begin(), vec.end());
-            vector<int> dp(n, 0);
-            int ans = 0;
-            for (int i = 0; i < vec.size(); i++)
+
+            if (dp[prev + 1][index] != -1)
             {
-                dp[i] = vec[i].first;
-                for (int j = 0; j < i; j++)
-                {
-                    if (vec[j].second <= vec[i].second)
-                    {
-                        dp[i] = max(dp[i], dp[j] + vec[i].first);
-                    }
-                }
-                ans = max(ans, dp[i]);
+                return dp[prev + 1][index];
             }
-            return ans;
+
+            if (prev == -1 || ageScorePair[index].second >= ageScorePair[prev].second)
+            {
+                return dp[prev + 1][index] = max(findMaxScore(dp, ageScorePair, prev, index + 1),
+                    ageScorePair[index].second + findMaxScore(dp, ageScorePair, index, index + 1));
+            }
+
+            return dp[prev + 1][index] = findMaxScore(dp, ageScorePair, prev, index + 1);
         }
+
+    int bestTeamScore(vector<int> &scores, vector<int> &ages)
+    {
+        vector<pair<int, int>> ageScorePair;
+        for (int i = 0; i < scores.size(); i++)
+        {
+            ageScorePair.push_back({ ages[i],
+                scores[i] });
+        }
+
+        sort(ageScorePair.begin(), ageScorePair.end());
+
+        vector<vector < int>> dp(scores.size(), vector<int> (scores.size(), -1));
+        return findMaxScore(dp, ageScorePair, -1, 0);
+    }
 };
