@@ -11,20 +11,21 @@
  */
 class Solution {
 public:
-    TreeNode* newRoot=NULL;
-    TreeNode* solve(TreeNode* root,TreeNode* prev){
-        if(!root)
-            return root;
-        solve(root->left,root);
-        root->right=prev;
-        root->left=!prev ? NULL : prev->right;
-        if(!newRoot){
-            newRoot=root;
+    TreeNode* dfs(TreeNode* root,TreeNode* parent){
+        if(!root){
+            return parent;
         }
-        return root;
+        TreeNode* res=dfs(root->left,root);
+        if(parent){
+            root->right=parent;
+            root->left=parent->right;
+        } else {
+            root->left=NULL;
+            root->right=NULL;
+        }
+        return res;
     }
     TreeNode* upsideDownBinaryTree(TreeNode* root) {
-       solve(root,NULL);
-        return newRoot;
+        return dfs(root,NULL);
     }
 };
