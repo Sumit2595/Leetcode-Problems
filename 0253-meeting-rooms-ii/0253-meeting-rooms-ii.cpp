@@ -1,24 +1,23 @@
 class Solution {
 public:
-    int minMeetingRooms(vector<vector<int>>& intervals) {
-        sort(intervals.begin(),intervals.end());
+    int minMeetingRooms(vector<vector<int>>& nums) {
         priority_queue<int,vector<int>,greater<int>>pq;
-        pq.push(intervals[0][1]);
-        int rooms=1;
-        int n=intervals.size();
+        sort(nums.begin(),nums.end());
+        int n=nums.size();
+        int ans=1;
+        pq.push(nums[0][1]);
         for(int i=1;i<n;i++){
-            int last=pq.top();
-            int sz=pq.size();
-            rooms=max(rooms,sz);
-            if(!pq.empty() && last<=intervals[i][0]){
-                pq.pop();
-            } 
-            pq.push(intervals[i][1]);
-            sz=pq.size();
-            rooms=max(rooms,sz);
+            if(!pq.empty() && pq.top()>nums[i][0]){
+                pq.push(nums[i][1]);
+            } else {
+                ans=max(ans,(int)pq.size());
+                while(!pq.empty() && pq.top()<=nums[i][0]){
+                    pq.pop();
+                }
+                pq.push(nums[i][1]);
+            }
+            ans=max(ans,(int)pq.size());
         }
-        int sz=pq.size();
-        rooms=max(rooms,sz);
-        return rooms;
+        return ans;
     }
 };
