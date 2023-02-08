@@ -7,12 +7,11 @@ public:
         }
         sort(nums.begin(),nums.end());
         int ans=INT_MAX;
-        int low=0,high=k-1;
-        while(high<n){
-            int diff=nums[high]-nums[low];
+        int low=0;
+        while(low+k-1<n){
+            int diff=nums[low+k-1]-nums[low];
             ans=min(ans,diff);
             low++;
-            high++;
         }
         return ans;
     }
