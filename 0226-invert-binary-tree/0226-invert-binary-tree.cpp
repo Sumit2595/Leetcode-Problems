@@ -12,11 +12,15 @@
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-        if(!root)
+        if(!root){
             return root;
-        auto leftSubtree=root->left;
-        root->left=invertTree(root->right);
-        root->right=invertTree(leftSubtree);
+        }
+        auto l=root->left;
+        auto r=root->right;
+        root->left=r;
+        root->right=l;
+        invertTree(root->left);
+        invertTree(root->right);
         return root;
     }
 };
