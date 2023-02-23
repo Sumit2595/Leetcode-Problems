@@ -5,13 +5,12 @@ public:
         if(profits.size() == 0 || capital.size() == 0)
             return ans;
         map<int,vector<int>> dict;
-        map<int,vector<int>>::iterator it;
         int n=profits.size();
         for(int i=0;i<n;i++){
             dict[capital[i]].push_back(profits[i]);
         }
         priority_queue<int>pq;
-        it=dict.begin();
+        auto it=dict.begin();
         while(k){
             for(;it!=dict.end();++it){
                 if(it->first > w)
