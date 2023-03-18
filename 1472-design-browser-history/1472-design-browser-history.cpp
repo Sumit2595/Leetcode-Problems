@@ -13,13 +13,22 @@ public:
     }
     
     string back(int steps) {
-        curr= max(0, curr - steps);
-        return history[curr];
+        if(steps<=curr){
+            curr-=steps;
+            return history[curr];
+        }
+        curr=0;
+        return history[0];
     }
     
     string forward(int steps) {
-        curr=min((int)history.size()-1,curr+steps);
-        return history[curr];
+        int rem=history.size()-curr-1;
+        if(steps<=rem){
+            curr+=steps;
+            return history[curr];
+        }
+        curr=history.size()-1;
+        return history[history.size()-1];
     }
 };
 
