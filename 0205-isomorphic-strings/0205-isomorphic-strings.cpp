@@ -13,7 +13,7 @@ public:
                 mp1[s[i]] = t[i];
                 mp2[t[i]] = s[i];
             } else {
-                if(mp1[s[i]] != t[i] && mp2[t[i]] != s[i])
+                if(mp1[s[i]] != t[i] || mp2[t[i]] != s[i])
                     return false;
             }
         }
