@@ -3,28 +3,29 @@ public:
     bool isValid(string str) {
         stack<char>st;
         for(auto s:str){
-            if(st.empty()){
-                st.push(s);
-            } else if(s==')'){
-                if(!st.empty() && st.top() == '('){
-                    st.pop();
-                } else{
+            if(s=='('){
+                st.push('(');
+            }
+            if(s=='{'){
+                st.push('{');
+            }
+            if(s=='['){
+                st.push('[');
+            }
+            if(s==')'){
+                if(st.empty() || st.top() != '(')
                     return false;
-                }
-            } else if(s=='}'){
-                if(!st.empty() && st.top() == '{'){
-                    st.pop();
-                } else{
+                st.pop();
+            }
+            if(s=='}'){
+                if(st.empty() || st.top() != '{')
                     return false;
-                }
-            } else if(s==']'){
-                if(!st.empty() && st.top() == '['){
-                    st.pop();
-                } else{
+                st.pop();
+            }
+            if(s==']'){
+                if(st.empty() || st.top() != '[')
                     return false;
-                }
-            } else{
-                st.push(s);
+                st.pop();
             }
         }
         return st.empty();
