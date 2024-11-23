@@ -11,10 +11,10 @@
  */
 class Solution {
 public:
+    
     TreeNode* invertTree(TreeNode* root) {
-        if(!root){
+        if(!root)
             return root;
-        }
         auto l=root->left;
         auto r=root->right;
         root->left=r;
