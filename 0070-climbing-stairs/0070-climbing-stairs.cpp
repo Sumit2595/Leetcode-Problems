@@ -1,12 +1,11 @@
 class Solution {
 public:
-    unordered_map<int,int>mp;
+    unordered_map<int,int>dp;
     int climbStairs(int n) {
         if(n<=2)
             return n;
-        if(mp.find(n)!=mp.end()){
-            return mp[n];
-        }
-        return mp[n]=climbStairs(n-1) + climbStairs(n-2);
+        if(dp.find(n)!=dp.end())
+            return dp[n];
+        return dp[n]=climbStairs(n-1)+climbStairs(n-2);
     }
 };
