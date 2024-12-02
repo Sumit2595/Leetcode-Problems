@@ -1,34 +1,25 @@
 class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
-        int m=s.length();
-        int n=p.length();
-        if(n>m){
-            return {};
-        }
-        unordered_map<char,int>freq1;
-        unordered_map<char,int>freq2;
+        unordered_map<char,int>mp1;
+        unordered_map<char,int>mp2;
         vector<int>ans;
-        for(auto x:p){
-            freq2[x]++;
-        }
-        for(int i=0;i<n;i++){
-            freq1[s[i]]++;
-        }
-        if(freq1 == freq2){
-            ans.push_back(0);
-        }
-        int l=0;
-        for(int i=n;i<m;i++){
-            freq1[s[i]]++;
-            freq1[s[l]]--;
-            if(freq1[s[l]] == 0){
-                freq1.erase(s[l]);
+        for(int i=0;i<p.length();i++)
+            mp2[p[i]]++;
+        int i=0,j=0,n=s.length();
+        while(j<n){
+            mp1[s[j]]++;
+            while(i<j && j-i+1>p.length()){
+                mp1[s[i]]--;
+                if(mp1[s[i]] == 0){
+                    mp1.erase(s[i]);
+                }
+                i++;
             }
-            l++;
-            if(freq1 == freq2){
-            ans.push_back(l);
+            if(mp1 == mp2){
+                ans.push_back(i);
             }
+            j++;
         }
         return ans;
     }
